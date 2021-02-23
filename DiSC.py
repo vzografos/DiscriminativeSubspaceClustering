@@ -38,6 +38,21 @@ def DataProjection(X,r,type='NormalProj'):
 
         #Achlioptas        
         elif type == 'Sparse':
+            sp =  np.random.randint(1, 6, (r*D,1))
+            Sp = np.sqrt(3/r)* ((sp==1).astype(int) -(sp==2).astype(int))
+
+            #avoid all zeros in a row
+            num=D
+            while num==D:
+                Sp= Sp[np.random.permutation(len(Sp))]
+                PrS=Sp.reshape(r,D)
+                num=max(np.sum(PrS==0,axis=1))
+            
+            Xp = PrS @ X
+            ProjMat=PrS
+
+        #Random subspace projection. Note, it does not satisfy the JL lemma
+        elif type == 'Subspace':
             pass
 
 
